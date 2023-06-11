@@ -7,8 +7,17 @@ const port = 3000
 
 app.use(express.static(path.join(__dirname, 'public')))
 
+// Xử lý dữ liệu từ server trả về
+app.use(express.urlencoded({
+    extended: true
+}))
+
+// Xử lý dữ liệu đẩy lên server
+app.use(express.json())
+
+
 // HTTP logger
-app.use(morgan('combined'))
+// app.use(morgan('combined'))
 
 // Templates engine
 app.engine('hbs', engine({
@@ -23,6 +32,15 @@ app.get('/home', (req, res) => {
 
 app.get('/new', (req, res) => {
     res.render('news')
+})
+
+app.get('/search', (req, res) => {
+    res.render('search')
+})
+
+app.post('/search', (req, res) => {
+    console.log(req.body)
+    res.render('search')
 })
 
 app.listen(port, () => {
